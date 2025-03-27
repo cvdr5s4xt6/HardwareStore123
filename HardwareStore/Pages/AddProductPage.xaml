@@ -45,14 +45,14 @@
 
             <TextBlock Text="Статус товара при заказе" />
             <ComboBox x:Name="OrderStatusComboBox" Margin="5" 
-                      SelectedValue="{Binding SelectedOrderStatusID}"
+                      SelectedValue="{Binding SelectedOrderStatusID, Mode=TwoWay}"
                       IsSynchronizedWithCurrentItem="True"
                       DisplayMemberPath="status_name" 
                       SelectedValuePath="id_status" />
 
             <TextBlock Text="Зарезервирован ли товар клиентом?" />
             <ComboBox x:Name="ReservationStatusComboBox" Margin="5" 
-                      SelectedValue="{Binding SelectedReservationStatusID}"
+                      SelectedValue="{Binding SelectedReservationStatusID, Mode=TwoWay}"
                       IsSynchronizedWithCurrentItem="True"
                       DisplayMemberPath="name_reserv" 
                       SelectedValuePath="id_reserv" />

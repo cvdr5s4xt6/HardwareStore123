@@ -32,13 +32,13 @@ namespace HardwareStore.Pages
         public AddProductPage(Action updateInventory)
         {
             InitializeComponent();
+            updateInventoryCallback = updateInventory;
             DataContext = this;
             LoadSuppliers();
             LoadProductTypes();
             LoadWarehouses(); 
             LoadReservationStatuses(); 
             LoadOrderStatuses(); 
-            updateInventoryCallback = updateInventory;
         }
 
         private void LoadReservationStatuses()
@@ -103,8 +103,8 @@ namespace HardwareStore.Pages
                 var supplierID = (int)SupplierComboBox.SelectedValue;
                 var quantity = int.Parse(QuantityTextBox.Text);
 
-                var reservationStatusID = (int)ReservationStatusComboBox.SelectedValue;
-                var orderStatusID = (int)OrderStatusComboBox.SelectedValue;
+                var reservationStatusID = SelectedReservationStatusID;
+                var orderStatusID = SelectedOrderStatusID;
 
                 var product = new Products
                 {
