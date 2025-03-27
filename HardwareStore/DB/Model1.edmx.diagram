@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e3309ebaffe74c7c862532bb04c82a13" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="StoreDBModel.Inventory" Width="1.5" PointX="5.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoreDBModel.Products" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoreDBModel.Roles" Width="1.5" PointX="1.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoreDBModel.Suppliers" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoreDBModel.Users" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <AssociationConnector Association="StoreDBModel.FK__Inventory__Produ__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="StoreDBModel.FK__Products__Suppli__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="StoreDBModel.FK__Users__RoleID__3B75D760" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="StoreDBModel.ProductTypes" Width="1.5" PointX="4.375" PointY="3.875" />
+        <AssociationConnector Association="StoreDBModel.FK__Products__Produc__02FC7413" />
+        <EntityTypeShape EntityType="StoreDBModel.OrderStatus" Width="1.5" PointX="0.75" PointY="18.875" />
+        <EntityTypeShape EntityType="StoreDBModel.Warehouse" Width="1.5" PointX="5.375" PointY="0.875" />
+        <AssociationConnector Association="StoreDBModel.FK_Products_OrderStatus" />
+        <AssociationConnector Association="StoreDBModel.FK_Products_Warehouse" />
+        <EntityTypeShape EntityType="StoreDBModel.reservation_status" Width="1.5" PointX="6.375" PointY="3.875" />
+        <AssociationConnector Association="StoreDBModel.FK_Products_ReservationStatus" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

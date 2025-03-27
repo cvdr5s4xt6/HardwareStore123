@@ -1,0 +1,49 @@
+﻿<Page x:Class="HardwareStore.Pages.WarehousePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HardwareStore.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Поставщик" Background="White">
+
+    <Grid Margin="10">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button x:Name="BackButton" Content="Назад" Width="100" Height="35" Click="BackButton_Click"/>
+        </StackPanel>
+
+        <DataGrid x:Name="WarehouseDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                  Margin="0,50,0,50" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Товар" Binding="{Binding Name}" Width="*" />
+                <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="*" />
+                <!--<DataGridTextColumn Header="Дата заказа" Binding="{Binding order_date}" Width="*" />
+                <DataGridTextColumn Header="Дата доставки" Binding="{Binding delivery_date}" Width="*" />-->
+                <DataGridTextColumn Header="Статус" Binding="{Binding status_name}" Width="*" />
+                <DataGridTemplateColumn Header="Действия">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="Отправить" Width="90" Margin="5,0" Click="SendProduct_Click"/>
+                                <Button Content="Задержать" Width="90" Margin="5,0" Click="DelayProduct_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+
+
+
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Label Content="Выбранная дата доставки:"/>
+            <DatePicker x:Name="DeliveryDatePicker" Width="120"/>
+            <TextBox x:Name="DeliveryTimeBox" Width="50" MaxLength="5" ToolTip="Формат: HH:mm"/>
+            <Button x:Name="ConfirmDelayButton" Content="Подтвердить задержку" Width="160" Click="ConfirmDelay_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>
