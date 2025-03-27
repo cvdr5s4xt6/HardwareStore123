@@ -43,7 +43,7 @@ namespace HardwareStore.Pages
 
         private void LoadReservationStatuses()
         {
-            var reservationStatus = App.db.reservation_status.FirstOrDefault(r => r.id_reserv == 1);
+            var reservationStatus = App.db.reservation_status.FirstOrDefault(r => r.id_reserv == 2);
             if (reservationStatus != null)
             {
                 ReservationStatusComboBox.ItemsSource = new List<reservation_status> { reservationStatus };
