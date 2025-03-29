@@ -14,6 +14,6 @@ namespace HardwareStore
     /// </summary>
     public partial class App : Application
     {
-        public static StoreDBEntities db = new StoreDBEntities();
+        public static StoreDB123Entities1 db = new StoreDB123Entities1();
     }
 }

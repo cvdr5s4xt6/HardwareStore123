@@ -117,6 +117,15 @@ namespace HardwareStore.Pages
         {
             var addProductPage = new AddProductPage(LoadInventoryData);
             NavigationService.Navigate(addProductPage);
+
+            addProductPage.OnProductAdded += () =>
+            {
+                LoadInventoryData();  
+                GenerateReceiptPDF(); 
+            };
+
+            NavigationService.Navigate(addProductPage);
+
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -204,5 +213,81 @@ namespace HardwareStore.Pages
                 MessageBox.Show($"Ошибка создания отчёта: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
+
+        private void GenerateReceiptPDF()
+        {
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "PDF файлы (*.pdf)|*.pdf",
+                    Title = "Сохранить чек"
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    Document doc = new Document(PageSize.A6, 20f, 20f, 20f, 20f);
+                    PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(saveFileDialog.FileName, FileMode.Create));
+
+                    doc.Open();
+
+                    BaseFont baseFont = BaseFont.CreateFont("C:\\Windows\\Fonts\\arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                    Font titleFont = new Font(baseFont, 14, Font.BOLD);
+                    Font dataFont = new Font(baseFont, 10, Font.NORMAL);
+
+                    doc.Add(new iTextSharp.text.Paragraph("Чек на добавление товара", titleFont)
+                    {
+                        Alignment = Element.ALIGN_CENTER
+                    });
+
+
+                    doc.Add(new iTextSharp.text.Paragraph($"\nДата: {DateTime.Now:dd.MM.yyyy HH:mm}\n\n", dataFont));
+
+
+                    var lastProduct = App.db.Products.OrderByDescending(p => p.ProductID).FirstOrDefault();
+                    if (lastProduct != null)
+                    {
+                        var productType = App.db.ProductTypes.FirstOrDefault(pt => pt.ProductTypeID == lastProduct.ProductTypeID);
+                        var supplier = App.db.Suppliers.FirstOrDefault(s => s.SupplierID == lastProduct.SupplierID);
+
+                        PdfPTable table = new PdfPTable(2)
+                        {
+                            WidthPercentage = 100
+                        };
+
+                        table.AddCell(new PdfPCell(new Phrase("Название:", dataFont)) { Border = 0 });
+                        table.AddCell(new PdfPCell(new Phrase(lastProduct.Name ?? "—", dataFont)) { Border = 0 });
+
+                        table.AddCell(new PdfPCell(new Phrase("Тип:", dataFont)) { Border = 0 });
+                        table.AddCell(new PdfPCell(new Phrase(productType?.TypeName ?? "—", dataFont)) { Border = 0 });
+
+                        table.AddCell(new PdfPCell(new Phrase("Цена закупки:", dataFont)) { Border = 0 });
+                        table.AddCell(new PdfPCell(new Phrase($"{lastProduct.PurchasePrice:F2} руб.", dataFont)) { Border = 0 });
+
+                        table.AddCell(new PdfPCell(new Phrase("Количество:", dataFont)) { Border = 0 });
+                        table.AddCell(new PdfPCell(new Phrase(lastProduct.Quantity?.ToString() ?? "0", dataFont)) { Border = 0 });
+
+                        table.AddCell(new PdfPCell(new Phrase("Поставщик:", dataFont)) { Border = 0 });
+                        table.AddCell(new PdfPCell(new Phrase(supplier?.SupplierName ?? "—", dataFont)) { Border = 0 });
+
+                        doc.Add(table);
+                    }
+                    else
+                    {
+                        doc.Add(new iTextSharp.text.Paragraph("Данные о товаре отсутствуют.", dataFont));
+                    }
+
+                    doc.Close();
+                    MessageBox.Show("Чек успешно сохранён!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка создания чека: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
 }

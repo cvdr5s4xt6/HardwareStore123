@@ -19,7 +19,8 @@
             <!-- Меню для поставщика -->
             <StackPanel x:Name="WarehouseMenu" >
                 <TextBlock Margin="0 0 0 50" HorizontalAlignment="Center" x:Name="Warehouse" Text="Меню для главного складского сотрудника компании:"></TextBlock>
-                <Button Content="Прием поставок" Click="Button_Click" />
+                <Button Content="Прием поставок" Click="Button_Click"/>
+                <Button Content="Инвентаризация" Click="Button1_Click"/>
             </StackPanel>
 
             <!-- Меню для клиента -->

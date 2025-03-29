@@ -99,5 +99,10 @@ namespace HardwareStore.Pages
         {
             NavigationService.Navigate(new WarehousePage());
         }
+
+        private void Button1_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new SupplierInventoryPage());
+        }
     }
 }

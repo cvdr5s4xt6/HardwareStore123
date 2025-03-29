@@ -18,6 +18,7 @@ namespace HardwareStore.DB
         public Products()
         {
             this.Inventory = new HashSet<Inventory>();
+            this.InventoryDiscrepancy = new HashSet<InventoryDiscrepancy>();
         }
     
         public int ProductID { get; set; }
@@ -36,10 +37,14 @@ namespace HardwareStore.DB
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inventory> Inventory { get; set; }
-        public virtual Suppliers Suppliers { get; set; }
-        public virtual ProductTypes ProductTypes { get; set; }
         public virtual OrderStatus OrderStatus { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
+        public virtual ProductTypes ProductTypes { get; set; }
+        public virtual Suppliers Suppliers { get; set; }
         public virtual reservation_status reservation_status { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InventoryDiscrepancy> InventoryDiscrepancy { get; set; }
+        public virtual ManagerStocks ManagerStocks { get; set; }
+        public virtual SupplierStocks SupplierStocks { get; set; }
     }
 }

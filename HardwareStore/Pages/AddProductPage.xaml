@@ -28,7 +28,7 @@
             <TextBox Name="SellingPriceTextBox" Margin="5" />
 
             <TextBlock Text="Кол-во товара" />
-            <TextBox Name="QuantityTextBox" Margin="5" />
+            <TextBox Name="QuantityTextBox" Margin="5" TextChanged="QuantityTextBox_TextChanged" />
 
             <TextBlock Text="Условия хранения" />
             <TextBox Name="StorageConditionsTextBox" Margin="5" />

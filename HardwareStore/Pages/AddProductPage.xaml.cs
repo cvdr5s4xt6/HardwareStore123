@@ -22,6 +22,7 @@ namespace HardwareStore.Pages
     /// </summary>
     public partial class AddProductPage : Page
     {
+        public event Action OnProductAdded;
         private Action updateInventoryCallback;
         public int SelectedProductTypeID { get; set; }
         public int SelectedProductWID { get; set; }
@@ -70,7 +71,54 @@ namespace HardwareStore.Pages
             var productTypes = App.db.ProductTypes.ToList();
             ProductTypeComboBox.ItemsSource = productTypes;
             ProductTypeComboBox.DisplayMemberPath = "TypeName"; 
-            ProductTypeComboBox.SelectedValuePath = "ProductTypeID";   
+            ProductTypeComboBox.SelectedValuePath = "ProductTypeID";
+
+            ProductTypeComboBox.SelectionChanged += (s, e) => CalculatePrice();
+        }
+
+
+        private void QuantityTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalculatePrice();
+        }
+
+        private void CalculatePrice()
+        {
+            if (ProductTypeComboBox.SelectedItem is ProductTypes selectedType &&
+                int.TryParse(QuantityTextBox.Text, out int quantity))
+            {
+                decimal pricePerUnit = 0;
+                switch (selectedType.TypeName)
+                {
+                    case "Доски":
+                        pricePerUnit = 100;
+                        break;
+                    case "Кафель":
+                        pricePerUnit = 200;
+                        break;
+                    case "Гвозди":
+                        pricePerUnit = 50;
+                        break;
+                    default:
+                        pricePerUnit = 0;
+                        break;
+                }
+
+                decimal totalPrice = pricePerUnit * quantity;
+
+                if (SupplierComboBox.SelectedValue == null)
+                {
+                    MessageBox.Show("Пожалуйста, выберите поставщика", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return; 
+                }
+
+                if ((int)SupplierComboBox.SelectedValue == 2)
+                {
+                    totalPrice -= totalPrice * 0.10m; 
+                }
+
+                PurchasePriceTextBox.Text = totalPrice.ToString("F2");
+            }
         }
 
         private void LoadSuppliers()
@@ -123,6 +171,7 @@ namespace HardwareStore.Pages
                 App.db.Products.Add(product);
                 App.db.SaveChanges();
                 MessageBox.Show("Товар добавлен успешно");
+                OnProductAdded?.Invoke(); 
                 Dispatcher.Invoke(() => updateInventoryCallback?.Invoke());
 
                 NavigationService.GoBack();
